@@ -13,10 +13,10 @@ Determiná que será impreso en la consola, sin ejecutar el código.
 x = 1;
 var a = 5;
 var b = 10;
-var c = function(a, b, c) {
+var c = function(a=8, b=9, c=10) {
   var x = 10;
-  console.log(x);
-  console.log(a);
+  console.log(x); 
+  console.log(a); 
   var f = function(a, b, c) {
     b = a;
     console.log(b);
@@ -26,10 +26,11 @@ var c = function(a, b, c) {
   f(a,b,c);
   console.log(b);
 }
-c(8,9,10);
+c(8,9,10);           
 console.log(b);
 console.log(x);
 ```
+LISTO: //x=10  //a=8 //b=a=8 //b=9 //b=10 //x=1
 
 ```javascript
 console.log(bar);
@@ -39,6 +40,7 @@ function foo() { console.log('Hola!'); }
 var bar = 1;
 baz = 2;
 ```
+LISTO: // bar= registra que esta creada, pero no llega a su definicion-> undefined  //baz=no esta creada->error // hola!
 
 ```javascript
 var instructor = "Tony";
@@ -47,6 +49,7 @@ if(true) {
 }
 console.log(instructor);
 ```
+LISTO: //Franco
 
 ```javascript
 var instructor = "Tony";
@@ -59,6 +62,8 @@ console.log(instructor);
 })();
 console.log(instructor);
 ```
+LISTO: //tony //franco //tony
+
 ```javascript
 var instructor = "Tony";
 let pm = "Franco";
@@ -71,27 +76,36 @@ if (true) {
 console.log(instructor);
 console.log(pm);
 ```
+LISTO: //the flash // reverse flash // the flash //franco
+
 ### Coerción de Datos
 
 ¿Cuál crees que será el resultado de la ejecución de estas operaciones?:
 
 ```javascript
-6 / "3"
-"2" * "3"
-4 + 5 + "px"
-"$" + 4 + 5
-"4" - 2
-"4px" - 2
-7 / 0
-{}[0]
-parseInt("09")
-5 && 2
-2 && 5
-5 || 0
-0 || 5
-[3]+[3]-[10]
-3>2>1
-[] == ![]
+6 / "3"----------2
+"2" * "3"--------6
+4 + 5 + "px"-----"9px"
+"$" + 4 + 5------"$45"
+"4" - 2----------2
+"4px" - 2--------NaN
+7 / 0------------infinity
+
+
+{}[0]------------undefined
+
+
+parseInt("09")---9
+5 && 3 &&2-------2 && si  encuentra un false (0 ) se detiene y o muestra
+5 && 0 &&2-------0
+2 && 5-----------5
+0||0||25||5------25 ||muestra el primero tru (mayor a 0)
+25 || 5----------25
+[3]+[3]-[10]-----concatena los dos primeros como caracteres, despues al encontraruna resa los usa como numeros y resta 10, devolviendo 23
+3>2>1------------3>2=true, true>1=false
+[] == []!--------false==false = true
+
+
 ```
 
 > Si te quedó alguna duda repasá con [este artículo](http://javascript.info/tutorial/object-conversion).
@@ -114,6 +128,8 @@ function test() {
 
 test();
 ```
+LISTO://undefined debido a que esta creada, pero todavia no definida //2 debido a que registra la creacion de la funcion antes de registar si la usa o no
+
 
 Y el de este código? :
 
@@ -130,6 +146,7 @@ function getFood(food) {
 
 getFood(false);
 ```
+LISTO: //undefined
 
 
 ### This
@@ -155,6 +172,9 @@ var test = obj.prop.getFullname;
 console.log(test());
 ```
 
+ LISTO: //aurelio de rosa  // juan perez
+
+
 ### Event loop
 
 Considerando el siguiente código, ¿Cuál sería el orden en el que se muestra por consola? ¿Por qué?
@@ -169,3 +189,5 @@ function printing() {
 
 printing();
 ```
+
+1//4//3//2
