@@ -93,6 +93,7 @@ LinkedList.prototype.search=function(v){
 
 function HashTable() {
     this.tabla=new Array(35);
+    this.numBuckets=35;
   }
   
 
@@ -109,7 +110,7 @@ function HashTable() {
                             var indice=this.hash(clave);
                             var encontrado=false;
                             if(typeof(clave)!="string"){
-                              return error("keys must be strings");
+                              throw TypeError("Keys must be strings");
                             }
                             if(this.tabla[indice]){
                               for(var i=0;i<this.tabla[indice].length;i++){
