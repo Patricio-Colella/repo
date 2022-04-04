@@ -11,11 +11,72 @@
 // search: Busca un valor dentro de la lista. Puede recibir un valor o una función. Si no hubiera resultados, devuelve null.
 
 function LinkedList() {
-
+  this.head=null;
 }
 
 function Node(value){
+  this.value=value
+  this.next=null
+}
 
+LinkedList.prototype.add=function(value){
+                          var nodo=new Node(value);
+                          var current=this.head;
+                          if(!current){
+                            this.head=nodo;
+                            return nodo;
+                          }
+                          while(current.next){
+                            current=current.next;
+                          }
+                          current.next=nodo;
+                          return nodo;
+ }
+
+ LinkedList.prototype.remove=function(){
+                              var current=this.head;
+                              var valuelost;
+                              var last;
+                              if(!current){
+                                return null;
+                              }
+                              if(!current.next){
+                                valuelost=current.value;
+                                this.head=null;
+                                return valuelost;
+                              }
+
+                              while(current.next.next){
+                                current=current.next;
+                              }
+                              valuelost=current.next.value;
+                              current.next=null;
+                              
+                              return valuelost;
+}
+
+LinkedList.prototype.search=function(v){
+                              var current=this.head;
+                              while(current){
+                                if(typeof(v)==="function"){
+                                  if(v(current.value)){
+                                    return current.value;
+                                  }
+                                }else{   
+                                    if(typeof(v)==="object") {
+                                      for (const key in v) {
+                                        if (v[key]===current.value) {
+                                          return v[key];
+                                        }
+                                      }
+                                    }
+                                  }
+                                 if(current.value===v){
+                                    return current.value;
+                                 }
+                                current=current.next;
+                              }
+                              return null;
 }
 
 // Hash Table( ver información en: https://es.wikipedia.org/wiki/Tabla_hash)
@@ -31,8 +92,66 @@ function Node(value){
 //    - Retornar dicho valor.
 
 function HashTable() {
+    this.tabla=new Array(35);
+  }
+  
 
-}
+  
+  HashTable.prototype.hash=function(clave){
+                            var suma=0;
+                            for(var i=0;i<clave.length;i++){
+                              suma=suma+clave.charCodeAt(i);
+                            }
+                            return suma%35;
+  }
+  
+  HashTable.prototype.set=function(clave,valor){
+                            var indice=this.hash(clave);
+                            var encontrado=false;
+                            if(typeof(clave)!="string"){
+                              return error("keys must be strings");
+                            }
+                            if(this.tabla[indice]){
+                              for(var i=0;i<this.tabla[indice].length;i++){
+                                if(this.tabla[indice][i][0]===clave){
+                                  this.tabla[indice][i][1]=valor;
+                                  encontrado=true;
+                                }
+                                i=i+1;
+                              }
+                            }
+                            if(this.tabla[indice]===undefined){
+                              this.tabla[indice]=[];
+                              this.tabla[indice].push([clave,valor]);
+                            }else{
+                              if(!encontrado){
+                                this.tabla[indice].push([clave,valor]);
+                              }
+                            }
+                            
+  }
+  
+  HashTable.prototype.get=function(clave){
+                            var indice=this.hash(clave);
+                            var sum=0;
+                            if(this.tabla[indice]){
+                                for(var i=0;i<this.tabla[indice].length;i++){
+                                    if(this.tabla[indice][i][0]===clave){
+                                        return this.tabla[indice][i][1]
+                                    }
+                                }
+                            }
+
+                            return undefined;
+  }
+  
+  HashTable.prototype.hasKey=function(clave){
+                                var x=this.get(clave);
+                                if(x===undefined){
+                                  return false;
+                                }
+                                return true;
+  }
 
 
 // No modifiquen nada debajo de esta linea
@@ -43,3 +162,4 @@ module.exports = {
   LinkedList,
   HashTable
 };
+
